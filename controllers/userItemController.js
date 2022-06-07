@@ -53,6 +53,21 @@ router.put('/modifyUserItem', async(req, res,next) => {
     }
 });
 
+router.patch('/modifyUserItem', async(req, res,next) => {
+    let connection = mysql.createConnection(mysqlconfig);
+    const db = makeDb();
+    await db.connect(connection);
+
+    try {
+        const usersItems = await db.query(connection, 'CALL modifyUserItem(?,?)', [req.body.ID, req.body.itemXP]);
+        res.status(HttpStatus.OK).json({success: true});
+    } catch (e) {
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ data: 'Error al modificar', success: false});
+    } finally {
+        await db.close(connection);
+    }
+});
+
 router.delete('/deleteUserItem', async(req, res,next) => {
     let connection = mysql.createConnection(mysqlconfig);
     const db = makeDb();
