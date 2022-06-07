@@ -68,7 +68,7 @@ router.patch('/modifyUserItem', async(req, res,next) => {
     }
 });
 
-router.delete('/deleteUserItem', async(req, res,next) => {
+router.post('/deleteUserItem', async(req, res,next) => {
     let connection = mysql.createConnection(mysqlconfig);
     const db = makeDb();
     await db.connect(connection);
